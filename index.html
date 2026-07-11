@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>rd-commerce — Build Status</title>
+<style>
+  :root {
+    --paper: #f3f6fa;
+    --card: #ffffff;
+    --ink: #0c1521;
+    --ink-soft: #253749;
+    --ink-faint: #3d5064;
+    --rule: #cdd8e2;
+    --rule-strong: #93a7ba;
+    --brand: #15507f;
+    --brand-deep: #14314e;
+    --sky: #4b9bde;
+    --brand-wash: #dfebf6;
+    --green: #0e5a37;
+    --green-wash: #d9ece1;
+    --amber: #5f4206;
+    --amber-wash: #f2e3bd;
+    --gray-chip: #dfe4e9;
+    --code-bg: #e6ecf2;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--ink); margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; line-height: 1.55; overflow-x: clip; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--brand); }
+  code { font-family: Consolas, ui-monospace, monospace; font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+  /* hero band: RD navy with aurora glow */
+  .hero {
+    position: relative;
+    background: linear-gradient(160deg, #0e2138 0%, #14314e 55%, #1d5c96 130%);
+    color: #eaf2fb;
+    overflow: hidden;
+    padding: 52px 0 44px;
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .hero::before { width: 480px; height: 480px; background: #4b9bde; opacity: 0.35; top: -220px; right: -100px; }
+  .hero::after { width: 380px; height: 380px; background: #4ade80; opacity: 0.16; bottom: -220px; left: -80px; }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow {
+    font-family: Consolas, ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8fc9f5;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+  h1 { font-size: clamp(30px, 4.5vw, 44px); font-weight: 780; letter-spacing: -0.02em; margin: 0 0 8px; color: #ffffff; }
+  .sub { color: #c2d6ea; margin: 0; font-size: 16.5px; max-width: 64ch; }
+  .meta {
+    font-family: Consolas, ui-monospace, monospace;
+    font-size: 13px;
+    color: #9db9d5;
+    margin: 20px 0 0;
+  }
+  .meta a { color: #8fc9f5; }
+  .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .hero-badge {
+    font-family: Consolas, ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(143, 201, 245, 0.35);
+    color: #d9eafc;
+  }
+  .hero-badge.green { border-color: rgba(74, 222, 128, 0.5); color: #b9f4d0; }
+
+  section { padding: 40px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--brand-deep);
+    margin: 0 0 22px;
+  }
+  h2::before { content: ""; width: 26px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--brand), var(--sky)); }
+
+  /* gallery */
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 720px) { .gallery { grid-template-columns: 1fr; } }
+  .shot {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(14, 33, 56, 0.06), 0 12px 28px rgba(14, 33, 56, 0.07);
+  }
+  .shot.wide { grid-column: 1 / -1; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot .cap { padding: 14px 18px 16px; }
+  .shot .cap b { display: block; font-size: 15px; margin-bottom: 3px; }
+  .shot .cap span { font-size: 13.5px; color: var(--ink-soft); }
+  .shot .cap a { font-size: 13px; }
+
+  /* changelog */
+  .log { border-left: 3px solid var(--sky); padding-left: 22px; display: grid; gap: 20px; }
+  .log-entry { position: relative; }
+  .log-entry::before {
+    content: "";
+    position: absolute;
+    left: -29px; top: 6px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--sky);
+    box-shadow: 0 0 0 3px var(--brand-wash);
+  }
+  .log-entry .when { font-family: Consolas, ui-monospace, monospace; font-size: 12px; color: var(--brand); font-weight: 600; }
+  .log-entry h3 { font-size: 16px; font-weight: 700; margin: 3px 0 5px; }
+  .log-entry p { margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 70ch; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; }
+  .stat {
+    background: linear-gradient(170deg, var(--card) 60%, var(--brand-wash));
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 20px 15px;
+  }
+  .stat .num {
+    font-family: Consolas, ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--brand);
+    line-height: 1.1;
+  }
+  .stat .lbl { font-size: 12.5px; color: var(--ink-soft); margin-top: 5px; }
+
+  /* tables + chips */
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th { text-align: left; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; padding: 0 14px 8px 0; border-bottom: 2px solid var(--brand); }
+  td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  td.ph { font-family: Consolas, ui-monospace, monospace; font-weight: 700; color: var(--brand); white-space: nowrap; }
+  td.desc { color: var(--ink-soft); }
+  tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 11px; border-radius: 999px; white-space: nowrap; }
+  .chip.done { background: var(--green-wash); color: var(--green); }
+  .chip.prog { background: var(--amber-wash); color: var(--amber); }
+  .chip.todo { background: var(--gray-chip); color: var(--ink-faint); }
+
+  /* owner cards */
+  .owners { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .owner { background: var(--card); border: 1px solid var(--rule); border-top: 4px solid var(--brand); border-radius: 10px; padding: 18px 20px; }
+  .owner.green { border-top-color: #16a34a; }
+  .owner.amber { border-top-color: #d97706; }
+  .owner.sky { border-top-color: var(--sky); }
+  .owner h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; }
+  .owner .tag { font-size: 12px; color: var(--brand); font-weight: 600; }
+  .owner ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: 13.5px; }
+  .owner li { margin: 6px 0; }
+  .owner li::marker { color: var(--sky); }
+
+  .note {
+    border-left: 4px solid var(--sky);
+    background: var(--card);
+    border-radius: 0 10px 10px 0;
+    padding: 15px 20px;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin-top: 22px;
+    box-shadow: 0 2px 8px rgba(14, 33, 56, 0.05);
+  }
+  .note b { color: var(--ink); }
+  footer { color: var(--ink-faint); font-size: 12.5px; padding: 26px 0 40px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Responsive Data · Commerce &amp; Subscription Platform</p>
+    <h1>rd-commerce — Build Status</h1>
+    <p class="sub">The new commerce platform (Vercel + Supabase) that owns 5LAD checkout, renewals, and all future Responsive Data billing — built to Dennis's Technical Specification v1.0. This page updates with every push.</p>
+    <div class="hero-badges">
+      <span class="hero-badge green">● 135 tests passing</span>
+      <span class="hero-badge">CI on every push</span>
+      <span class="hero-badge">Updated Sat Jul 11, 2026</span>
+    </div>
+    <p class="meta">
+      <a href="https://github.com/responsive-data/rd-commerce">GitHub repo</a> ·
+      <a href="https://rd-commerce-dennis-rdatas-projects.vercel.app">live demo</a> (Vercel team login) ·
+      <a href="https://rd-commerce-dennis-rdatas-projects.vercel.app/admin">ops dashboard</a> ·
+      <a href="https://github.com/responsive-data/rd-commerce/blob/master/docs/HUDDLE-2026-07-10-DECISIONS.md">huddle decisions</a>
+    </p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <h2>See it</h2>
+    <div class="gallery">
+      <div class="shot wide">
+        <img src="img/checkout-card.jpg" alt="5LAD checkout: dark glass scene with live 3D payment card, order bump, and paper receipt" loading="lazy">
+        <div class="cap">
+          <b>The wow-factor checkout</b>
+          <span>5LAD-branded glass scene with a live 3D payment card that fills in as you type (and flips for the CVV), the admin-added order bump, and the die-cut receipt. </span>
+          <a href="https://rd-commerce-dennis-rdatas-projects.vercel.app/checkout">Try it →</a>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="img/welcome-back.jpg" alt="Email detection: welcome back panel asking for password" loading="lazy">
+        <div class="cap">
+          <b>Account detection</b>
+          <span>Email-first checkout: existing customers authenticate before anything prepopulates. Demo: returning@demo.com / demo123.</span>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="img/returning-pay.jpg" alt="Returning customer pay step: prepopulated details, saved-card dropdown, CVV only" loading="lazy">
+        <div class="cap">
+          <b>CVV-only for returning customers</b>
+          <span>Saved details prepopulate, primary card first in the dropdown — only the security code is re-entered.</span>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="img/card-manager.jpg" alt="Card manager: primary and backup badges with consent" loading="lazy">
+        <div class="cap">
+          <b>Multi-card manager</b>
+          <span>Add cards, switch the primary, and opt into backups — automatic charging only with explicit customer permission.</span>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="img/builder.jpg" alt="Admin checkout-page builder with brand colors and offer toggles" loading="lazy">
+        <div class="cap">
+          <b>Checkout-page builder</b>
+          <span>Admins set branding, colors, order bumps, and promo fields — the checkout re-themes with zero code deploy. </span>
+          <a href="https://rd-commerce-dennis-rdatas-projects.vercel.app/admin/checkout-pages">Open builder →</a>
+        </div>
+      </div>
+      <div class="shot wide">
+        <img src="img/ops-dashboard.jpg" alt="Operations dashboard: alerts, renewals, legacy sync queue" loading="lazy">
+        <div class="cap">
+          <b>Operations dashboard</b>
+          <span>Every failure visible, classified, and recoverable: alerts, renewal stats, the legacy sync queue, gateway reconciliation, and subscription health (spec §16).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where things stand</h2>
+    <div class="owners">
+      <div class="owner green">
+        <h3>✅ Built, tested, deployed <span class="tag">· 135 tests green, CI-gated</span></h3>
+        <ul>
+          <li>Complete DB schema + 5LAD seed (17 tables incl. stores &amp; checkout pages, versioned pricing, transactional outbox)</li>
+          <li>2-step checkout with account detection, auth, saved cards, order bump, promo codes</li>
+          <li>Renewal engine — declines→hold, retries, recovery, 14-day grace, expiration; double-charge-proof</li>
+          <li>Refund / cancel / reactivate commands with cumulative-refund limits</li>
+          <li>Authorize.Net adapter (charge, refund, void, reconciliation); zero card data stored</li>
+          <li>Legacy sync worker + all 13 signed contracts with JSON fixtures for Cody</li>
+          <li>Multi-card manager, checkout-page builder, ops dashboard, login-handoff security</li>
+        </ul>
+      </div>
+      <div class="owner amber">
+        <h3>⏳ Waiting on <span class="tag">· unblocks in minutes once received</span></h3>
+        <ul>
+          <li><b>Supabase org invite → Brian (Dennis, one-time)</b> — database live the same day</li>
+          <li>Authorize.Net sandbox keys (Brian) — real gateway testing end to end</li>
+          <li>Legacy field mappings C1–C10 (Cody) — final sync payload + auth wiring</li>
+          <li>Policy sign-offs D1–D6 (Dennis) — dunning numbers, grace, refunds, notices</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Latest updates</h2>
+    <div class="log">
+      <div class="log-entry">
+        <span class="when">Jul 11</span>
+        <h3>The checkout-page builder, live</h3>
+        <p>Admins can now create and customize checkout pages: <code>/admin/checkout-pages</code> edits the product display name, three brand colors, the order bump (label + price), and a promo-code field (demo code SAVE10 = $10 off). Save, open the checkout, and the whole scene re-themes — verified with a full purple/amber "Contact Boost 10K" rebrand. Zero code deploy.</p>
+      </div>
+      <div class="log-entry">
+        <span class="when">Jul 11</span>
+        <h3>The wow-factor checkout</h3>
+        <p>Dark glass scene in the 5LAD palette with drifting aurora light, frosted panels, and a live 3D payment card that fills in as you type and flips for the CVV. The order bump renders from checkout-page config with live total math. Animations respect reduced-motion.</p>
+      </div>
+      <div class="log-entry">
+        <span class="when">Jul 11</span>
+        <h3>Multi-card manager (Dennis items 3 &amp; 4)</h3>
+        <p>Add cards, switch the primary, opt cards in as backups — with the explicit "if your primary declines, we'll automatically charge this card" consent Dennis required.</p>
+      </div>
+      <div class="log-entry">
+        <span class="when">Jul 10 · huddle follow-up</span>
+        <h3>Dennis's huddle decisions folded in</h3>
+        <p>Platform rebranded to <b>Responsive Data</b>; schema extended for multiple cards and the checkout-page builder; 2-step email-first checkout built the same day. Decision record + the checkout/dunning/embedding recommendations are in the repo docs.</p>
+      </div>
+      <div class="log-entry">
+        <span class="when">Jul 10</span>
+        <h3>Foundation day</h3>
+        <p>Repo, full docs package, complete Supabase schema, domain state machine + renewal engine with money-critical invariants proven by tests, Authorize.Net adapter, all 13 Commerce↔Legacy contracts with fixtures, operations dashboard, CI gate. 135 tests by midnight.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>By the numbers</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">135</div><div class="lbl">tests passing (unit + contract)</div></div>
+      <div class="stat"><div class="num">17</div><div class="lbl">database tables, 5 migrations</div></div>
+      <div class="stat"><div class="num">13</div><div class="lbl">Commerce↔Legacy contracts + fixtures</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">portal + admin pages deployed</div></div>
+      <div class="stat"><div class="num">10</div><div class="lbl">docs in version control</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spec roadmap</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Deliverable</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="ph">A</td><td class="desc">Foundation — repo, migrations, auth skeleton, CI</td><td><span class="chip done">Done</span></td></tr>
+          <tr><td class="ph">B</td><td class="desc">Core domain — catalog, subscriptions, transactions, outbox, state machine</td><td><span class="chip done">Done</span></td></tr>
+          <tr><td class="ph">C</td><td class="desc">Authorize.Net — adapter + reconciliation built</td><td><span class="chip prog">Awaiting sandbox keys</span></td></tr>
+          <tr><td class="ph">D</td><td class="desc">Legacy integration — contracts, fixtures, sync worker</td><td><span class="chip prog">Awaiting Cody's mappings</span></td></tr>
+          <tr><td class="ph">E</td><td class="desc">Customer portal + checkout — live in demo mode, handoff auth ready</td><td><span class="chip prog">Demo live</span></td></tr>
+          <tr><td class="ph">F</td><td class="desc">Renewal engine — decision core + workers tested</td><td><span class="chip prog">Awaiting Supabase</span></td></tr>
+          <tr><td class="ph">G–I</td><td class="desc">Launch, stabilization, expansion (builder UI, coupons, annual)</td><td><span class="chip todo">Queued</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><b>The single biggest unblock:</b> a Supabase project. The moment it exists, migrations run, the demo store swaps for real persistence, and internal end-to-end testing starts against the Authorize.Net sandbox.</div>
+  </section>
+
+  <section>
+    <h2>What we need — by owner</h2>
+    <div class="owners">
+      <div class="owner sky">
+        <h3>Cody <span class="tag">· legacy side</span></h3>
+        <ul>
+          <li>ROC / Requests / UPSubscriptions field mappings (C1–C3)</li>
+          <li>5LAD lead-order insert/hold/resume/terminate rules (C4)</li>
+          <li>Password hash + email lookup endpoints for checkout auth (C9–C10)</li>
+          <li>Contract fixtures ready for review: <code>tests/contract/fixtures/</code></li>
+        </ul>
+      </div>
+      <div class="owner">
+        <h3>Dennis <span class="tag">· policy + accounts</span></h3>
+        <ul>
+          <li>Supabase org invite for Brian (Administrator, one-time)</li>
+          <li>Dunning proposal sign-off (D1) + grace details (D2)</li>
+          <li>Voice/SMS credits (D3) · refund policy (D4) · portal domain (D5) · who sends dunning emails (D6)</li>
+        </ul>
+      </div>
+      <div class="owner green">
+        <h3>Kassandra <span class="tag">· testing, today</span></h3>
+        <ul>
+          <li>Full lifecycle clickable on the <a href="https://rd-commerce-dennis-rdatas-projects.vercel.app">live demo</a>: purchase → decline → hold → recovery → cancel → reverse</li>
+          <li>Test cards: 4111 1111 1111 1111 approves · 4000 0000 0000 0002 declines · saved-card CVV 000 declines</li>
+          <li>Returning customer: returning@demo.com / demo123 · promo: SAVE10</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>Responsive Data · Commerce &amp; Subscription Platform · internal build status · screenshots are demo mode (sample data, no real charges)</footer>
+</div>
+</body>
+</html>
