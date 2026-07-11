@@ -194,7 +194,7 @@
     <h1>rd-commerce — Build Status</h1>
     <p class="sub">The new commerce platform (Vercel + Supabase) that owns 5LAD checkout, renewals, and all future Responsive Data billing — built to Dennis's Technical Specification v1.0. This page updates with every push.</p>
     <div class="hero-badges">
-      <span class="hero-badge green">● 135 tests passing</span>
+      <span class="hero-badge green">● 146 tests passing</span>
       <span class="hero-badge">CI on every push</span>
       <span class="hero-badge">Updated Sat Jul 11, 2026</span>
     </div>
@@ -263,7 +263,7 @@
     <h2>Where things stand</h2>
     <div class="owners">
       <div class="owner green">
-        <h3>✅ Built, tested, deployed <span class="tag">· 135 tests green, CI-gated</span></h3>
+        <h3>✅ Built, tested, deployed <span class="tag">· 146 tests green, CI-gated</span></h3>
         <ul>
           <li>Complete DB schema + 5LAD seed (17 tables incl. stores &amp; checkout pages, versioned pricing, transactional outbox)</li>
           <li>2-step checkout with account detection, auth, saved cards, order bump, promo codes</li>
@@ -289,6 +289,11 @@
   <section>
     <h2>Latest updates</h2>
     <div class="log">
+      <div class="log-entry">
+        <span class="when">Jul 12</span>
+        <h3>Addendum 1: Customer &amp; Sales module folded in</h3>
+        <p>Dennis's addendum (wholesale/custom sales without waiting on QuickBooks) is in the repo: decision record + draft legacy contracts, migration 6 (customers + sales + invoices with Pay-Now tokens), and the sale lifecycle state machine with tests — Shawn's invoice flow and Nicole's phone-order flow on one Sale object, double-charge-proof. Most plumbing already existed and reuses directly. Next build: the Sales module demo UI. Tests now at <b>146</b>.</p>
+      </div>
       <div class="log-entry">
         <span class="when">Jul 11</span>
         <h3>Checkout composition + the register tape</h3>
@@ -317,7 +322,7 @@
       <div class="log-entry">
         <span class="when">Jul 10</span>
         <h3>Foundation day</h3>
-        <p>Repo, full docs package, complete Supabase schema, domain state machine + renewal engine with money-critical invariants proven by tests, Authorize.Net adapter, all 13 Commerce↔Legacy contracts with fixtures, operations dashboard, CI gate. 135 tests by midnight.</p>
+        <p>Repo, full docs package, complete Supabase schema, domain state machine + renewal engine with money-critical invariants proven by tests, Authorize.Net adapter, all 13 Commerce↔Legacy contracts with fixtures, operations dashboard, CI gate. 146 tests by midnight.</p>
       </div>
     </div>
   </section>
@@ -325,7 +330,7 @@
   <section>
     <h2>By the numbers</h2>
     <div class="stats">
-      <div class="stat"><div class="num">135</div><div class="lbl">tests passing (unit + contract)</div></div>
+      <div class="stat"><div class="num">146</div><div class="lbl">tests passing (unit + contract)</div></div>
       <div class="stat"><div class="num">17</div><div class="lbl">database tables, 5 migrations</div></div>
       <div class="stat"><div class="num">13</div><div class="lbl">Commerce↔Legacy contracts + fixtures</div></div>
       <div class="stat"><div class="num">8</div><div class="lbl">portal + admin pages deployed</div></div>
